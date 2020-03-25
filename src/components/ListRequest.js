@@ -21,10 +21,10 @@ class ListRequest extends React.Component {
             orderList: [],
             file: null
         }
-        this.sampleFunction = this.sampleFunction.bind(this);
+        // this.sampleFunction = this.sampleFunction.bind(this);
         this.uploadFile = this.uploadFile.bind(this);
         this.uploadFileToS3 = this.uploadFileToS3.bind(this);
-        this.onFileChangeHandler = this.onFileChangeHandler(this);
+        this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
     }
 
     async componentDidMount() {
@@ -37,7 +37,7 @@ class ListRequest extends React.Component {
         // await this.setState({organizationName: data.organizationName})
     }
 
-    async sampleFunction(responseObj) {
+    async sampleFunction(event) {
     }
 
     async uploadFileToS3(buffer, name, type){
@@ -82,9 +82,7 @@ class ListRequest extends React.Component {
 
     }
     async onFileChangeHandler(event){
-        if(event){
         await this.setState({file: event.target.files});
-        }
     };
 
     render() {
