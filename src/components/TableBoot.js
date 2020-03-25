@@ -34,22 +34,24 @@ class TableBoot extends React.Component {
     render() {
 
         const Orders = this.state.rows.map(
-            item => {
-                        return <tr>
-                            <td>item.key</td>
-                            <td>item.type</td>
-                            <td>item.requestCount</td>
-                            <td>item.createdAt</td>
-                            <td>item.district</td>
-                            <td>item.status</td>
-                            <td>item.pdfUrl</td>
-                        </tr>
+            (item, index) => {
+                        return(
+                            <tr key={index}>
+                                <td>{index}</td>
+                                <td>{item["type"]}</td>
+                                <td>{item["requestCount"]}</td>
+                                <td>{item["createdAt"]}</td>
+                                <td>{item["district"]}</td>
+                                <td>{item["status"]}</td>
+                                <td>{item["pdfUrl"]}</td>
+                            </tr>
+                        )
                     }
         );
 
         return(
             <div>
-                <Table>
+                <Table striped bordered hover>
                     <thead>
                         <th>#</th>
                         <th>Type</th>
