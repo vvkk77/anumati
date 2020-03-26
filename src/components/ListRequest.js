@@ -1,9 +1,12 @@
 import React from 'react';
 import axios from 'axios';
+import '../ListRequest.css';
+
 import TableBoot from './TableBoot';
 import BaseCard from './BaseCard';
 import individualOrderImage from '../images/individual-order.png';
 import vehicleOrderImage from '../images/vehicle-order.png';
+import api from '../api';
 
 class ListRequest extends React.Component {
     constructor(props) {
@@ -17,47 +20,59 @@ class ListRequest extends React.Component {
             orderList: [],
             file: null,
             type: null,
+            fetchError: ''
         };
         // this.sampleFunction = this.sampleFunction.bind(this);
         this.createRequest = this.createRequest.bind(this);
         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
+        this.createStaticData = this.createStaticData.bind(this);
+        this.onVehicle = this.onVehicle.bind(this);
+        this.onPerson = this.onPerson.bind(this);
     }
 
     async componentDidMount() {
-        //get all applications
+        //get all orders
+        try{
+        const response = await api.getAllOrders(this.state.accountId, this.state.authToken);
+        console.log('response', {response});
+        if(response.status === 200){
+            this.setState({ orderList: response.data.orders });
+        } else {
+            await this.createStaticData();
+        }
+    } catch (error){
+            this.setState({fetchError: error.toString()});
+            await this.createStaticData();
+        }
+    }
 
-        const response = await fetch('https://api.npms.io/v2/search?q=react');
-        const data = await response.json();
-
+    //placeholder data
+    async createStaticData(){
         await this.setState({
             orderList: [
-                {
-                    id: '',
-                    accountId: '',
-                    orderStatus: '',
-                    orderType: '',
-                    requestCount: '100',
+            {
+                id: '',
+                accountId: '',
+                orderStatus: '',
+                orderType: '',
+                requestCount: '100',
 
-                    district: 'Bengaluru',
-                    type: 'VEHICLE',
-                    status: 'Approved',
-                    createdAt: '25/03/2020 | 07:01 am',
-                    pdfUrl:
-                        'https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200308-sitrep-48-covid-19.pdf',
-                },
-                {
-                    requestCount: '300',
-                    district: 'Bengaluru',
-                    type: 'PERSON',
-                    status: 'Pending',
-                    createdAt: '30/04/2020 | 10:01 pm',
-                    pdfUrl: null,
-                },
-            ],
-        });
-
-        await this.setState({
-            organizationName: data.organizationName,
+                district: 'Bengaluru',
+                type: 'VEHICLE',
+                status: 'Approved',
+                createdAt: '25/03/2020 | 07:01 am',
+                pdfUrl:
+                    'https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200308-sitrep-48-covid-19.pdf',
+            },
+            {
+                requestCount: '300',
+                district: 'Bengaluru',
+                type: 'PERSON',
+                status: 'Pending',
+                createdAt: '30/04/2020 | 10:01 pm',
+                pdfUrl: null,
+            },
+        ],
         });
     }
 
@@ -86,14 +101,26 @@ class ListRequest extends React.Component {
         await this.setState({ file: event.target.files });
     }
 
+    async onVehicle() {
+        await this.setState({
+            type: 'VEHICLE'
+        });
+    }
+
+    async onPerson() {
+        await this.setState({
+            type: 'PERSON'
+        });
+    }
+
     render() {
         return (
             <div className='padding-46'>
                 <div class='action-container'>
-                    <BaseCard isActive>
+                    <BaseCard isActive onClick={this.onPerson}>
                         <img height='60' src={individualOrderImage} />
                     </BaseCard>
-                    <BaseCard>
+                    <BaseCard  onClick={this.onVehicle}>
                         <img height='60' src={vehicleOrderImage} />
                     </BaseCard>
                     <div class='separator'></div>
@@ -115,8 +142,8 @@ class ListRequest extends React.Component {
                     </BaseCard>
                 </div>
                 <TableBoot rows={this.state.orderList} />
-            </div>
-        );
+                </div>
+            );
     }
 }
 export default ListRequest;
