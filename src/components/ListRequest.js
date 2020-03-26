@@ -19,8 +19,10 @@ class ListRequest extends React.Component {
             organizationName: '',
             orderList: [],
             file: null,
-            type: null,
-            fetchError: ''
+            type: 'person',
+            fetchError: '',
+            person: true,
+            vehicle: false,
         };
         // this.sampleFunction = this.sampleFunction.bind(this);
         this.createRequest = this.createRequest.bind(this);
@@ -95,13 +97,17 @@ class ListRequest extends React.Component {
 
     async onVehicle() {
         await this.setState({
-            type: 'vehicle'
+            type: 'vehicle',
+            person: false,
+            vehicle: true
         });
     }
 
     async onPerson() {
         await this.setState({
-            type: 'person'
+            type: 'person',
+            person: true,
+            vehicle: false
         });
     }
 
@@ -109,14 +115,14 @@ class ListRequest extends React.Component {
         return (
             <div className='padding-46'>
                 <div class='action-container'>
-                    <BaseCard isActive onClick={this.onPerson}>
+                    <BaseCard isActive={this.state.person} onClick={this.onPerson}>
                         <img height='60' src={individualOrderImage} />
                     </BaseCard>
-                    <BaseCard  onClick={this.onVehicle}>
+                    <BaseCard isActive={this.state.vehicle} onClick={this.onVehicle}>
                         <img height='60' src={vehicleOrderImage} />
                     </BaseCard>
                     <div class='separator'></div>
-                    <BaseCard>Download Sample file</BaseCard>
+                    <BaseCard isActive={true}>Download Sample file</BaseCard>
 
                     <div class='upload-container'>
                         <label for='file-upload'>Upload file</label>
@@ -129,7 +135,7 @@ class ListRequest extends React.Component {
                         />
                     </div>
 
-                    <BaseCard onClick={this.createRequest} class='send-request-btn'>
+                    <BaseCard isActive={true} onClick={this.createRequest} class='send-request-btn'>
                         Send Request
                     </BaseCard>
                 </div>
