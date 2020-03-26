@@ -62,12 +62,14 @@ class ListRequest extends React.Component {
             return;
         }
         formData.append('type', this.state.type);
+        formData.append('accountId', this.state.accountId)
         formData.append('authToken', this.state.authToken);
         formData.append('file', this.state.file[0]);
-        const url = `http://localhost:3000` + '/createApplication';
+        const url = `http://localhost:3000` + '/createOrder';
 
         try{
             const response = await axios.post(url, formData);
+
             console.log(response);
         } catch (error){
             console.log(error);
