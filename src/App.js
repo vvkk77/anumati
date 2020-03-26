@@ -1,5 +1,6 @@
 import React from 'react';
 import Login from './components/Login';
+import ListRequest from './components/ListRequest';
 import './App.css';
 
 class App extends React.Component {
@@ -15,14 +16,23 @@ class App extends React.Component {
   render() {
     if (this.state.login === 0) {
       return (
-        <div>
+        <div className="login-form">
+          <img src="../anumatiLogo.jpg" style={{
+            display: "block",
+            marginLeft: "auto",
+            marginRight: "auto"
+          }} />
           <Login></Login>
         </div>
       );      
     } else {
       return (
         <div>
-          <h1>Without Login</h1>
+          <ListRequest
+            organization= 'random'
+            accountId = 'random'
+            authToken= 'random'
+					/>
         </div>
       );
     }
