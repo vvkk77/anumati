@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import TableBoot from './TableBoot';
+
 class ListRequest extends React.Component {
 
     constructor(props) {
@@ -12,14 +14,44 @@ class ListRequest extends React.Component {
             organizationName: '',
             orderList: [],
             file: null,
-            type: ''
+            type: null
         }
         // this.sampleFunction = this.sampleFunction.bind(this);
         this.createRequest = this.createRequest.bind(this);
         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
     }
 
+
     async componentDidMount() {
+        //get all applications
+
+        const response = await fetch('https://api.npms.io/v2/search?q=react');
+        const data = await response.json();
+
+        await this.setState({
+            orderList: [
+                            {
+                                "requestCount": "100",
+                                "district": "Bengaluru",
+                                "type": "VEHICLE",
+                                "status": "Approved",
+                                "createdAt": "25/03/2020 | 07:01 am",
+                                "pdfUrl": "https://www.who.int/docs/default-source/coronaviruse/situation-reports/20200308-sitrep-48-covid-19.pdf"
+                            },
+                            {
+                                "requestCount": "300",
+                                "district": "Bengaluru",
+                                "type": "PERSON",
+                                "status": "Pending",
+                                "createdAt": "30/04/2020 | 10:01 pm",
+                                "pdfUrl": null
+                            }
+                        ]
+        });
+
+        await this.setState({
+            organizationName: data.organizationName
+        });
     }
 
 	async createRequest() {
@@ -33,12 +65,12 @@ class ListRequest extends React.Component {
         formData.append('file', this.state.file[0]);
         const url = `http://localhost:3000` + '/createApplication';
 
-        // try{
-        //     const response = await axios.post(url, formData);
-        //     console.log(response);
-        // } catch (error){
-        //     console.log(error);
-        // }
+        try{
+            const response = await axios.post(url, formData);
+            console.log(response);
+        } catch (error){
+            console.log(error);
+        }
     }
 
     async onFileChangeHandler(event) {
@@ -64,6 +96,7 @@ class ListRequest extends React.Component {
                 </div>
             </div>
         </div>
+        <TableBoot rows={this.state.orderList} />
             </div>
         );
     }
