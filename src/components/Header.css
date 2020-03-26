@@ -1,0 +1,13 @@
+.app-header {
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+    padding: 22px 56px;
+    align-items: center;
+}
+
+.app-header .sign-out {
+    font-weight: 600;
+    font-size: 14px;
+    color: '#909090';
+}

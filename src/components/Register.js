@@ -2,38 +2,24 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import FormErrorMessage from './FormErrorMessage';
-import Register from './Register';
+
 import '../Login.css';
 
-class Login extends React.Component {
+class Register extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            registered: true,
-        };
     }
 
-    loginEval = async () => {
-        this.props.loginSuccess();
-    };
-
-    openRegistrationForm = () => {
-        this.setState({ registered: false });
-    };
-
-    hideRegistrationForm = () => {
-        this.setState({ registered: true });
+    registerEval = async () => {
+        this.props.onRegister();
     };
 
     render() {
-        if (!this.state.registered) {
-            return <Register onRegister={this.hideRegistrationForm}></Register>;
-        }
         return (
             <div className='form-container'>
                 <Formik
                     className='login-form'
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ email: '', organization: '', password: '', cpassword: '' }}
                     validate={(values) => {
                         const errors = {};
                         if (!values.email) {
@@ -45,17 +31,45 @@ class Login extends React.Component {
                             errors.password = 'Required';
                         }
 
+                        if (!values.organization) {
+                            errors.organization = 'Required';
+                        }
+
+                        if (!values.cpassword) {
+                            errors.cpassword = 'Required';
+                        }
+
                         return errors;
                     }}
-                    onSubmit={this.loginEval}>
+                    onSubmit={this.registerEval}>
                     {({ isSubmitting }) => (
                         <Form>
-                            <Field type='email' name='email' placeholder='Email ID' />
+                            <Field type='text' name='name' placeholder='Your Name' />
+                            <ErrorMessage name='name' component={FormErrorMessage} />
+
+                            <Field
+                                type='email'
+                                name='email'
+                                placeholder='Email ID (will be your username)'
+                            />
                             <ErrorMessage name='email' component={FormErrorMessage} />
+
+                            <Field
+                                type='text'
+                                name='organization'
+                                placeholder='Organization name'
+                            />
+                            <ErrorMessage name='organization' component={FormErrorMessage} />
 
                             <Field type='password' name='password' placeholder='Create Password' />
                             <ErrorMessage name='password' component={FormErrorMessage} />
 
+                            <Field
+                                type='password'
+                                name='cpassword'
+                                placeholder='Confirm Password'
+                            />
+                            <ErrorMessage name='cpassword' component={FormErrorMessage} />
                             <br></br>
 
                             <Button
@@ -63,18 +77,14 @@ class Login extends React.Component {
                                 size='lg'
                                 type='submit'
                                 disabled={isSubmitting}>
-                                Login
+                                Register
                             </Button>
                         </Form>
                     )}
                 </Formik>
-
-                <div onClick={this.openRegistrationForm} class='create-acc-link'>
-                    Create a new account
-                </div>
             </div>
         );
     }
 }
 
-export default Login;
+export default Register;
