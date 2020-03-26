@@ -84,7 +84,11 @@ class ListRequest extends React.Component {
             return;
         }
         try {
-            const response = await api.createOrder(this.state.type, this.state.file, this.state.authToken);
+            let formData = new FormData();    //formdata object
+            formData.append('file', this.state.file);   //append the values with key, value pair
+            formData.append("orderType", this.state.type);
+            formData.append("authToken",  this.state.authToken)
+            const response = await api.createOrder(formData);
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -127,7 +131,7 @@ class ListRequest extends React.Component {
                     <div class='upload-container'>
                         <label for='file-upload'>Upload file</label>
                         <input
-                            hidden
+                            // hidden
                             id='file-upload'
                             type='file'
                             accept='.csv'
