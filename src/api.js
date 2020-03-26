@@ -4,6 +4,9 @@ const BASE_URL = 'http://13.233.33.10:8091';
 const headers = {
     "Content-Type": "application/json"
 };
+const fileHeaders = {
+    'Content-Type': 'multipart/form-data'
+}
 axios.defaults.baseURL = BASE_URL;
 
 export default {
@@ -15,12 +18,12 @@ export default {
         return axios.post('/createAccount', { name, email, password, key: 'test' }, {headers: headers});
     },
 
-    createOrder(type, file,  authToken){
-        return axios.post('/createOrder', { "orderType":type, "authToken": authToken, "file": file });
+    createOrder(formData){
+        return axios.post('/createOrder', formData, {headers: fileHeaders});
     },
 
     getAllOrders(accountId, authToken){
-        const value = axios.post('/getOrders', { "accountID": accountId, "authToken": authToken });
+        const value = axios.post('/getOrders', { "accountID": accountId, "authToken": authToken }, {headers: headers});
         console.log(value);
         return value;
     }
