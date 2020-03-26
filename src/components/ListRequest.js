@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import '../ListRequest.css';
 import TableBoot from './TableBoot';
 
 class ListRequest extends React.Component {
@@ -80,20 +81,27 @@ class ListRequest extends React.Component {
     render() {
         return(
             <div>
-                <div className="container">
-            <div className="row">
-                <div className="col-md-6">
-                        <div className="form-group files color">
-                        <form onSubmit={this.createRequest}>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "space-evenly",
+                    marginTop: "100px",
+                    marginBottom: "100px"
+                }}>
+                    <button className="button">
+                        <img src="../individual.jpg" />
+                    </button>
+                    <button className="button">
+                        <img src="../vehicle.jpg" />
+                    </button>
+                    <form onSubmit={this.createRequest} style={{
+                        // flexGrow: "2"
+                    }}>
                         <label>Upload Your File </label>
-                            <input type='file' className="form-control" accept=".csv" onChange={this.onFileChangeHandler} />
-                            <button type='submit'>Send</button>
-                        </form>
-                        </div>
+                        <input type='file' className="form-control" accept=".csv" onChange={this.onFileChangeHandler} />
+                        <button type='submit'>Send</button>
+                    </form>
                 </div>
-            </div>
-        </div>
-        <TableBoot rows={this.state.orderList} />
+                <TableBoot rows={this.state.orderList} />
             </div>
         );
     }
