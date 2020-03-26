@@ -31,25 +31,28 @@ class ListRequest extends React.Component {
         //get all applications
 
 
-        // const response = await fetch('https://api.npms.io/v2/search?q=react');
-        // const data = await response.json();
-        // await this.setState({ orderList: data.orders })
-        // await this.setState({organizationName: data.organizationName})
+        const response = await fetch('https://api.npms.io/v2/search?q=react');
+        const data = await response.json();
+        await this.setState({ orderList: data.orders })
+        await this.setState({organizationName: data.organizationName})
     }
 
     async sampleFunction(event) {
     }
 
-    async uploadFileToS3(buffer, name, type){
-                // configure the keys for accessing AWS
-                // configure keys later
-        AWS.config.update({
-        accessKeyId: AWS_ACCESS_KEY_ID,
-        secretAccessKey: AWS_SECRET_ACCESS_KEY
+    async uploadFileToS3(buffer, name, type) {
+
+        // configure the keys for accessing AWS
+        // configure keys later
+        await AWS.config.update({
+            accessKeyId: AWS_ACCESS_KEY_ID,
+            secretAccessKey: AWS_SECRET_ACCESS_KEY
         });
-  // configure AWS to work with promises
-        AWS.config.setPromisesDependency(bluebird);
-  // create S3 instance
+
+        // configure AWS to work with promises
+        await AWS.config.setPromisesDependency(bluebird);
+
+        // create S3 instance
         const s3 = new AWS.S3();
 
         const params = {
@@ -59,28 +62,33 @@ class ListRequest extends React.Component {
           ContentType: type.mime,
           Key: `${name}.${type.ext}`
         };
+
         return s3.upload(params).promise();
-      };
+    };
+
 	async uploadFile() {
-            const formData = new FormData();
-            formData.append('file', this.state.file[0]);
-            const form = new multiparty.Form();
-            form.parse(formData, async (error, fields, files) => {
-              if (error) throw new Error(error);
-              try {
+
+        const formData = new FormData();
+        await formData.append('file', this.state.file[0]);
+        const form = new multiparty.Form();
+
+        await form.parse(formData, async (error, fields, files) => {
+            if (error) throw new Error(error);
+
+            try {
                 const path = files.file[0].path;
-                const buffer = fs.readFileSync(path);
+                const buffer = await fs.readFileSync(path);
                 const type = fileType(buffer);
                 const timestamp = Date.now().toString();
                 const fileName = `bucketFolder/${timestamp}-lg`;
                 const data = await this.uploadFileToS3(buffer, fileName, type);
-                // return response.status(200).send(data);
-              } catch (error) {
-                // return response.status(400).send(error);
-              }
-            });
-
+            // return response.status(200).send(data);
+            } catch (error) {
+            // return response.status(400).send(error);
+            }
+        });
     }
+    
     async onFileChangeHandler(event){
         await this.setState({file: event.target.files});
     };
@@ -92,18 +100,18 @@ class ListRequest extends React.Component {
                 <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
                 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
                 <div className="container">
-            <div className="row">
-                <div className="col-md-6">
-                        <div className="form-group files color">
-                        <form onSubmit={this.uploadFile}>
-                        <label>Upload Your File </label>
-                            <input type='file' className="form-control" accept=".csv" onChange={this.onFileChangeHandler} />
-                            <button type='submit'>Send</button>
-                        </form>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div className="form-group files color">
+                            <form onSubmit={this.uploadFile}>
+                            <label>Upload Your File </label>
+                                <input type='file' className="form-control" accept=".csv" onChange={this.onFileChangeHandler} />
+                                <button type='submit'>Send</button>
+                            </form>
+                            </div>
                         </div>
+                    </div>
                 </div>
-            </div>
-        </div>
             </div>
         );
     }
