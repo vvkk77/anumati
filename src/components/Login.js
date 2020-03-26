@@ -1,33 +1,50 @@
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-
+import FormErrorMessage from './FormErrorMessage';
+import Register from './Register';
 import '../Login.css';
+import api from '../api';
 
 class Login extends React.Component {
-
     constructor(props) {
         super(props);
+        this.state = {
+            registered: true,
+        };
+    }
 
-        this.loginEval = this.loginEval.bind(this);
-    }
-    
-    async loginEval() {
-        this.props.loginSuccess();
-    }
+    loginEval = async (params) => {
+        const { email, password } = params;
+        const { data } = await api.signIn(email, password);
+
+        localStorage.setItem('auth', data.authToken);
+
+        this.props.onLogin();
+    };
+
+    openRegistrationForm = () => {
+        this.setState({ registered: false });
+    };
+
+    hideRegistrationForm = () => {
+        this.setState({ registered: true });
+    };
 
     render() {
-        return(
-            <div>
+        if (!this.state.registered) {
+            return <Register onRegister={this.hideRegistrationForm}></Register>;
+        }
+        return (
+            <div className='form-container'>
                 <Formik
-                    className="login-form"
+                    className='login-form'
                     initialValues={{ email: '', password: '' }}
-                    validate={values => {
+                    validate={(values) => {
                         const errors = {};
                         if (!values.email) {
                             errors.email = 'Required';
-                        } else if (
-                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                        ) {
+                        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                             errors.email = 'Invalid email address';
                         }
                         if (!values.password) {
@@ -36,50 +53,31 @@ class Login extends React.Component {
 
                         return errors;
                     }}
-                    onSubmit={this.loginEval}
-                >
+                    onSubmit={this.loginEval}>
                     {({ isSubmitting }) => (
-                        <Form style={{
-                            width: "fit-content",
-                            marginLeft: "auto",
-                            marginRight: "auto"
-                        }}>
-                            <label htmlFor="email" style={{
-                                display: "block",
-                                marginTop: "4em"
-                            }}>
-                                Email
-                            </label>
-                            <Field
-                                label="Email ID"
-                                type="email"
-                                name="email"
-                                placeholder="Enter Email ID" />
-                            <ErrorMessage name="email" component="div" />
-                            <label htmlFor="password" style={{
-                                display: "block",
-                                margin: "10px"
-                            }}>
-                                Password
-                            </label>
-                            <Field
-                                type="password"
-                                name="password"
-                                placeholder="Enter Password"
-                                label="Password" />
-                            <ErrorMessage name="password" component="div" />
-                            <button type="submit" disabled={isSubmitting} style={{
-                                display: "block",
-                                width: "fit-content",
-                                marginLeft: "auto",
-                                marginRight: "auto",
-                                marginTop: "50px"
-                            }}>
-                                Submit
-                            </button>
+                        <Form>
+                            <Field type='email' name='email' placeholder='Email ID' />
+                            <ErrorMessage name='email' component={FormErrorMessage} />
+
+                            <Field type='password' name='password' placeholder='Create Password' />
+                            <ErrorMessage name='password' component={FormErrorMessage} />
+
+                            <br></br>
+
+                            <Button
+                                variant='primary'
+                                size='lg'
+                                type='submit'
+                                disabled={isSubmitting}>
+                                Login
+                            </Button>
                         </Form>
                     )}
                 </Formik>
+
+                <div onClick={this.openRegistrationForm} class='create-acc-link'>
+                    Create a new account
+                </div>
             </div>
         );
     }

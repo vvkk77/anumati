@@ -1,0 +1,12 @@
+.base-card {
+    width: 100px;
+    height: 100px;
+    display: inline-flex;
+    border-radius: 8px;
+    border: 2px solid #00a4ff;
+    justify-content: center;
+    align-items: center;
+    margin-right: 36px;
+    cursor: pointer;
+    text-align: center;
+}
