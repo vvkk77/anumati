@@ -21,6 +21,8 @@ class ListRequest extends React.Component {
         // this.sampleFunction = this.sampleFunction.bind(this);
         this.createRequest = this.createRequest.bind(this);
         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
+        this.onVehicle = this.onVehicle.bind(this);
+        this.onPerson = this.onPerson.bind(this);
     }
 
     async componentDidMount() {
@@ -86,14 +88,26 @@ class ListRequest extends React.Component {
         await this.setState({ file: event.target.files });
     }
 
+    async onVehicle() {
+        await this.setState({
+            type: 'VEHICLE'
+        });
+    }
+
+    async onPerson() {
+        await this.setState({
+            type: 'PERSON'
+        });
+    }
+
     render() {
         return (
             <div className='padding-46'>
                 <div class='action-container'>
-                    <BaseCard isActive>
+                    <BaseCard isActive onClick={this.onPerson}>
                         <img height='60' src='../individual-order.png' />
                     </BaseCard>
-                    <BaseCard>
+                    <BaseCard  onClick={this.onVehicle}>
                         <img height='60' src='../vehicle-order.png' />
                     </BaseCard>
                     <div class='separator'></div>
@@ -114,12 +128,6 @@ class ListRequest extends React.Component {
                         Send Request
                     </BaseCard>
                 </div>
-                {/* <div className='form-group files color'>
-                            <form onSubmit={this.createRequest}>
-                                <label>Upload Your File </label>
-                                <button type='submit'>Send</button>
-                            </form>
-                        </div> */}
                 <TableBoot rows={this.state.orderList} />
             </div>
         );
