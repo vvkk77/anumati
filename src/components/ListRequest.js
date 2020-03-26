@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import TableBoot from './TableBoot';
 import BaseCard from './BaseCard';
+import individualOrderImage from '../images/individual-order.png';
+import vehicleOrderImage from '../images/vehicle-order.png';
+
 class ListRequest extends React.Component {
     constructor(props) {
         super(props);
@@ -88,10 +91,10 @@ class ListRequest extends React.Component {
             <div className='padding-46'>
                 <div class='action-container'>
                     <BaseCard isActive>
-                        <img height='60' src='../individual-order.png' />
+                        <img height='60' src={individualOrderImage} />
                     </BaseCard>
                     <BaseCard>
-                        <img height='60' src='../vehicle-order.png' />
+                        <img height='60' src={vehicleOrderImage} />
                     </BaseCard>
                     <div class='separator'></div>
                     <BaseCard>Download Sample file</BaseCard>
