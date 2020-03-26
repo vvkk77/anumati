@@ -11,11 +11,11 @@
     text-transform: uppercase;
 }
 
-.status .pending {
+.status.pending {
     color: #e17614;
 }
 
-.status .success {
+.status.approved {
     color: #12ab2b;
 }
 

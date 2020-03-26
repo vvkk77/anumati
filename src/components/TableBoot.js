@@ -10,7 +10,7 @@ class TableBoot extends React.Component {
             let statusClass = 'status';
 
             if (item['status']) {
-                statusClass += ` ${statusClass}`;
+                statusClass += ` ${item['status'].toLowerCase()}`;
             }
 
             return (
