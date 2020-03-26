@@ -34,8 +34,15 @@ class Login extends React.Component {
                     }}
                     >
                     {({ isSubmitting }) => (
-                        <Form>
-                            <label htmlFor="email" style={{ display: "block" }}>
+                        <Form style={{
+                            width: "fit-content",
+                            marginLeft: "auto",
+                            marginRight: "auto"
+                        }}>
+                            <label htmlFor="email" style={{
+                                display: "block",
+                                marginTop: "4em"
+                            }}>
                                 Email
                             </label>
                             <Field
@@ -44,7 +51,10 @@ class Login extends React.Component {
                                 name="email"
                                 placeholder="Enter Email ID" />
                             <ErrorMessage name="email" component="div" />
-                            <label htmlFor="password" style={{ display: "block" }}>
+                            <label htmlFor="password" style={{
+                                display: "block",
+                                margin: "10px"
+                            }}>
                                 Password
                             </label>
                             <Field
@@ -53,7 +63,13 @@ class Login extends React.Component {
                                 placeholder="Enter Password"
                                 label="Password" />
                             <ErrorMessage name="password" component="div" />
-                            <button type="submit" disabled={isSubmitting} style={{ display: "block" }}>
+                            <button type="submit" disabled={isSubmitting} style={{
+                                display: "block",
+                                width: "fit-content",
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                marginTop: "50px"
+                            }}>
                                 Submit
                             </button>
                         </Form>
