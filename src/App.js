@@ -10,12 +10,18 @@ class App extends React.Component {
 
         this.state = {
             loggedIn: false,
+            accountId: null,
+            organizationId: null,
+            authToken: null
         };
     }
 
-    onLoginSuccess = async () => {
+    onLoginSuccess = async (accountId, authToken, organizationId) => {
         this.setState({
             loggedIn: true,
+            accountId: accountId,
+            authToken: authToken,
+            organizationId: organizationId
         });
     };
 
@@ -38,7 +44,11 @@ class App extends React.Component {
             return (
                 <div>
                     <Header />
-                    <ListRequest />
+                    <ListRequest
+                     organization= {this.state.organization}
+                     accountId= {this.state.accountId}
+                     authToken= {this.state.authToken}
+                    />
                 </div>
             );
         }

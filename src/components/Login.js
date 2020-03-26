@@ -11,6 +11,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             registered: true,
+
         };
     }
 
@@ -19,8 +20,8 @@ class Login extends React.Component {
         const { data } = await api.signIn(email, password);
 
         localStorage.setItem('auth', data.authToken);
-
-        this.props.onLogin();
+        // to send - authToken, organizationId, organization,
+        this.props.onLogin(data.accountID, data.authToken, data.organizationID);
     };
 
     openRegistrationForm = () => {
