@@ -76,7 +76,7 @@ class Login extends React.Component {
                     )}
                 </Formik>
 
-                <div onClick={this.openRegistrationForm} class='create-acc-link'>
+                <div onClick={this.openRegistrationForm} className='create-acc-link'>
                     Create a new account
                 </div>
             </div>
