@@ -1,13 +1,5 @@
 import React from 'react';
-import uuidv4 from 'uuid/v4'
-const AWS = require('aws-sdk');
-const fs = require('fs');
-const fileType = require('file-type');
-const bluebird = require('bluebird');
-const multiparty = require('multiparty');
-const AWS_ACCESS_KEY_ID = 'AKIA42DEGMQ2KQT3EOHX'
-const AWS_SECRET_ACCESS_KEY = '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\n'
-
+import axios from 'axios';
 class ListRequest extends React.Component {
 
     constructor(props) {
@@ -19,69 +11,37 @@ class ListRequest extends React.Component {
             authToken: this.props.authToken,
             organizationName: '',
             orderList: [],
-            file: null
+            file: null,
+            type: ''
         }
         // this.sampleFunction = this.sampleFunction.bind(this);
-        this.uploadFile = this.uploadFile.bind(this);
-        this.uploadFileToS3 = this.uploadFileToS3.bind(this);
+        this.createRequest = this.createRequest.bind(this);
         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
     }
 
     async componentDidMount() {
-        //get all applications
-
-
-        // const response = await fetch('https://api.npms.io/v2/search?q=react');
-        // const data = await response.json();
-        // await this.setState({ orderList: data.orders })
-        // await this.setState({organizationName: data.organizationName})
     }
 
-    async sampleFunction(event) {
+	async createRequest() {
+        // create request to save file
+        let formData = new FormData();
+        if(!this.state.type){
+            return;
+        }
+        formData.append('type', this.state.type);
+        formData.append('authToken', this.state.authToken);
+        formData.append('file', this.state.file[0]);
+        const url = `http://localhost:3000` + '/createApplication';
+
+        // try{
+        //     const response = await axios.post(url, formData);
+        //     console.log(response);
+        // } catch (error){
+        //     console.log(error);
+        // }
     }
 
-    async uploadFileToS3(buffer, name, type){
-                // configure the keys for accessing AWS
-                // configure keys later
-        AWS.config.update({
-        accessKeyId: AWS_ACCESS_KEY_ID,
-        secretAccessKey: AWS_SECRET_ACCESS_KEY
-        });
-  // configure AWS to work with promises
-        AWS.config.setPromisesDependency(bluebird);
-  // create S3 instance
-        const s3 = new AWS.S3();
-
-        const params = {
-          ACL: 'public-read',
-          Body: buffer,
-          Bucket: process.env.S3_BUCKET,
-          ContentType: type.mime,
-          Key: `${name}.${type.ext}`
-        };
-        return s3.upload(params).promise();
-      };
-	async uploadFile() {
-            const formData = new FormData();
-            formData.append('file', this.state.file[0]);
-            const form = new multiparty.Form();
-            form.parse(formData, async (error, fields, files) => {
-              if (error) throw new Error(error);
-              try {
-                const path = files.file[0].path;
-                const buffer = fs.readFileSync(path);
-                const type = fileType(buffer);
-                const timestamp = Date.now().toString();
-                const fileName = `bucketFolder/${timestamp}-lg`;
-                const data = await this.uploadFileToS3(buffer, fileName, type);
-                // return response.status(200).send(data);
-              } catch (error) {
-                // return response.status(400).send(error);
-              }
-            });
-
-    }
-    async onFileChangeHandler(event){
+    async onFileChangeHandler(event) {
         await this.setState({file: event.target.files});
     };
 
@@ -95,7 +55,7 @@ class ListRequest extends React.Component {
             <div className="row">
                 <div className="col-md-6">
                         <div className="form-group files color">
-                        <form onSubmit={this.uploadFile}>
+                        <form onSubmit={this.createRequest}>
                         <label>Upload Your File </label>
                             <input type='file' className="form-control" accept=".csv" onChange={this.onFileChangeHandler} />
                             <button type='submit'>Send</button>
