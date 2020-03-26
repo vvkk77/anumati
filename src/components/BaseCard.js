@@ -3,7 +3,7 @@ import './BaseCard.css';
 
 const BaseCard = (props) => {
     let className = 'base-card';
-    if (props.isActive) {
+    if (props.isActive === true) {
         className += ' active';
     }
 
