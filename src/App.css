@@ -1,6 +1,64 @@
-.login-form{
+.login-form {
     margin: auto;
     display: block;
     width: 50%;
     margin-top: 10%;
+}
+
+.status {
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.status.pending {
+    color: #e17614;
+}
+
+.status.approved {
+    color: #12ab2b;
+}
+
+.separator {
+    display: inline-flex;
+    width: 0;
+    border: 1px solid gray;
+    height: 100px;
+    margin-right: 36px;
+}
+
+.action-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.action-container :last-child {
+    margin-right: 0;
+}
+
+.upload-container {
+    height: 100px;
+    display: inline-flex;
+    border-radius: 8px;
+    border: 1px dashed #c4c4c4;
+    justify-content: center;
+    align-items: center;
+    margin-right: 36px;
+    cursor: pointer;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.send-request-btn {
+    background-color: #00a4ff;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    margin-right: 0;
+}
+
+.request-table-container {
+    margin-top: 40px;
 }
