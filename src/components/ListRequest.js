@@ -4,6 +4,8 @@ import '../ListRequest.css';
 
 import TableBoot from './TableBoot';
 import BaseCard from './BaseCard';
+import individualOrderImage from '../images/individual-order.png';
+import vehicleOrderImage from '../images/vehicle-order.png';
 import api from '../api';
 
 class ListRequest extends React.Component {
@@ -108,10 +110,10 @@ class ListRequest extends React.Component {
             <div className='padding-46'>
                 <div class='action-container'>
                     <BaseCard isActive onClick={this.onPerson}>
-                        <img height='60' src='../individual-order.png' />
+                        <img height='60' src={individualOrderImage} />
                     </BaseCard>
                     <BaseCard  onClick={this.onVehicle}>
-                        <img height='60' src='../vehicle-order.png' />
+                        <img height='60' src={vehicleOrderImage} />
                     </BaseCard>
                     <div class='separator'></div>
                     <BaseCard>Download Sample file</BaseCard>
