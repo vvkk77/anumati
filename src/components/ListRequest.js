@@ -4,6 +4,8 @@ import '../ListRequest.css';
 
 import TableBoot from './TableBoot';
 import BaseCard from './BaseCard';
+import individualOrderImage from '../images/individual-order.png';
+import vehicleOrderImage from '../images/vehicle-order.png';
 import api from '../api';
 
 class ListRequest extends React.Component {
@@ -31,14 +33,14 @@ class ListRequest extends React.Component {
     async componentDidMount() {
         //get all orders
         try{
-        const response = await api.getAllOrders(this.state.accountId, this.state.authToken);
-        console.log('response', {response});
-        if(response.status === 200){
-            this.setState({ orderList: response.data.orders });
-        } else {
-            await this.createStaticData();
-        }
-    } catch (error){
+            const response = await api.getAllOrders(this.state.accountId, this.state.authToken);
+            console.log('response', {response});
+            if(response.status === 200){
+                this.setState({ orderList: response.data.orders });
+            } else {
+                await this.createStaticData();
+            }
+        } catch (error){
             this.setState({fetchError: error.toString()});
             await this.createStaticData();
         }
@@ -76,19 +78,11 @@ class ListRequest extends React.Component {
 
     async createRequest() {
         // create request to save file
-        let formData = new FormData();
         if (!this.state.type) {
             return;
         }
-        formData.append('type', this.state.type);
-        formData.append('accountId', this.state.accountId);
-        formData.append('authToken', this.state.authToken);
-        formData.append('file', this.state.file[0]);
-        const url = `http://localhost:3000` + '/createOrder';
-
         try {
-            const response = await axios.post(url, formData);
-
+            const response = await api.createOrder(this.state.type, this.state.file, this.state.authToken);
             console.log(response);
         } catch (error) {
             console.log(error);
@@ -101,13 +95,13 @@ class ListRequest extends React.Component {
 
     async onVehicle() {
         await this.setState({
-            type: 'VEHICLE'
+            type: 'vehicle'
         });
     }
 
     async onPerson() {
         await this.setState({
-            type: 'PERSON'
+            type: 'person'
         });
     }
 
@@ -116,10 +110,10 @@ class ListRequest extends React.Component {
             <div className='padding-46'>
                 <div class='action-container'>
                     <BaseCard isActive onClick={this.onPerson}>
-                        <img height='60' src='../individual-order.png' />
+                        <img height='60' src={individualOrderImage} />
                     </BaseCard>
                     <BaseCard  onClick={this.onVehicle}>
-                        <img height='60' src='../vehicle-order.png' />
+                        <img height='60' src={vehicleOrderImage} />
                     </BaseCard>
                     <div class='separator'></div>
                     <BaseCard>Download Sample file</BaseCard>

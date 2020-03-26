@@ -3,6 +3,7 @@ import Login from './components/Login';
 import ListRequest from './components/ListRequest';
 import Header from './components/Header';
 import './App.css';
+import anumatiLogo from './images/anumatiLogo.jpg';
 
 class App extends React.Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class App extends React.Component {
             return (
                 <div className='login-form'>
                     <img
-                        src='../anumatiLogo.jpg'
+                        src={anumatiLogo}
                         style={{
                             display: 'block',
                             marginLeft: 'auto',
