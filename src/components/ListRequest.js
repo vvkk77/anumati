@@ -123,13 +123,6 @@ class ListRequest extends React.Component {
                         Send Request
                     </BaseCard>
                 </div>
-                {/* <div className='form-group files color'>
-                            <form onSubmit={this.createRequest}>
-                                <label>Upload Your File </label>
-                                <button type='submit'>Send</button>
-                            </form>
-                        </div> */}
-
                 <TableBoot rows={this.state.orderList} />
                 </div>
             );

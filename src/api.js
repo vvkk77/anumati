@@ -9,7 +9,7 @@ export default {
         return axios.post('/signin', { email, password });
     },
 
-    register( name, email, password) {
+    register(name, email, password) {
         return axios.post('/createAccount', { name, email, password, key: 'test' });
     },
 
