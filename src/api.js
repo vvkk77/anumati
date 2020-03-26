@@ -13,8 +13,8 @@ export default {
         return axios.post('/createAccount', { name, email, password, key: 'test' });
     },
 
-    createOrder(accountId, type, file,  authToken){
-        return axios.post('/createOrder', { accountId, type, file,  authToken });
+    createOrder(type, file,  authToken){
+        return axios.post('/createOrder', { "orderType":type, "authToken": authToken, "file": file });
     },
 
     getAllOrders(accountId, authToken){
