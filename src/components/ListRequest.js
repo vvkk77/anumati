@@ -80,9 +80,6 @@ class ListRequest extends React.Component {
     render() {
         return(
             <div>
-                <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"></link>
-                <script src="//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-                <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
                 <div className="container">
             <div className="row">
                 <div className="col-md-6">

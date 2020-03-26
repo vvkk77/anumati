@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './components/Login';
 import ListRequest from './components/ListRequest';
+import Header from './components/Header';
 import './App.css';
 
 class App extends React.Component {
@@ -11,6 +12,14 @@ class App extends React.Component {
     this.state = {
       login: 0
     }
+
+    this.loginSuccess = this.loginSuccess.bind(this);
+  }
+
+  async loginSuccess() {
+    await this.setState({
+      login: 1
+    });
   }
   
   render() {
@@ -22,17 +31,15 @@ class App extends React.Component {
             marginLeft: "auto",
             marginRight: "auto"
           }} />
-          <Login></Login>
+          <Login
+          loginSuccess={this.loginSuccess} />
         </div>
       );      
     } else {
       return (
         <div>
-          <ListRequest
-            organization= 'random'
-            accountId = 'random'
-            authToken= 'random'
-					/>
+          <Header />
+          <ListRequest />
         </div>
       );
     }
