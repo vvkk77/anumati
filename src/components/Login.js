@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import FormErrorMessage from './FormErrorMessage';
 import Register from './Register';
 import '../Login.css';
+import api from '../api';
 
 class Login extends React.Component {
     constructor(props) {
@@ -13,8 +14,13 @@ class Login extends React.Component {
         };
     }
 
-    loginEval = async () => {
-        this.props.loginSuccess();
+    loginEval = async (params) => {
+        const { email, password } = params;
+        const { data } = await api.signIn(email, password);
+
+        localStorage.setItem('auth', data.authToken);
+
+        this.props.onLogin();
     };
 
     openRegistrationForm = () => {

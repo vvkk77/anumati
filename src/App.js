@@ -13,7 +13,7 @@ class App extends React.Component {
         };
     }
 
-    loginSuccess = async () => {
+    onLoginSuccess = async () => {
         this.setState({
             loggedIn: true,
         });
@@ -31,7 +31,7 @@ class App extends React.Component {
                             marginRight: 'auto',
                         }}
                     />
-                    <Login loginSuccess={this.loginSuccess} />
+                    <Login onLogin={this.onLoginSuccess} />
                 </div>
             );
         } else {

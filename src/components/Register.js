@@ -4,13 +4,17 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import FormErrorMessage from './FormErrorMessage';
 
 import '../Login.css';
+import api from '../api';
 
 class Register extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    registerEval = async () => {
+    registerEval = async (params) => {
+        const { name, email, password } = params;
+        const { data } = await api.register(name, email, password);
+        console.log('data: ', data);
         this.props.onRegister();
     };
 
@@ -19,7 +23,13 @@ class Register extends React.Component {
             <div className='form-container'>
                 <Formik
                     className='login-form'
-                    initialValues={{ email: '', organization: '', password: '', cpassword: '' }}
+                    initialValues={{
+                        name: '',
+                        email: '',
+                        organization: '',
+                        password: '',
+                        cpassword: '',
+                    }}
                     validate={(values) => {
                         const errors = {};
                         if (!values.email) {
@@ -27,8 +37,13 @@ class Register extends React.Component {
                         } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
                             errors.email = 'Invalid email address';
                         }
+
                         if (!values.password) {
                             errors.password = 'Required';
+                        }
+
+                        if (!values.name) {
+                            errors.name = 'Required';
                         }
 
                         if (!values.organization) {
