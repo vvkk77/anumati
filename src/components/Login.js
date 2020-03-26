@@ -5,6 +5,16 @@ import '../Login.css';
 
 class Login extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.loginEval = this.loginEval.bind(this);
+    }
+    
+    async loginEval() {
+        this.props.loginSuccess();
+    }
+
     render() {
         return(
             <div>
@@ -26,13 +36,8 @@ class Login extends React.Component {
 
                         return errors;
                     }}
-                    onSubmit={(values, { setSubmitting }) => {
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            setSubmitting(false);
-                        }, 400);
-                    }}
-                    >
+                    onSubmit={this.loginEval}
+                >
                     {({ isSubmitting }) => (
                         <Form style={{
                             width: "fit-content",
