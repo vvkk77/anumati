@@ -1,5 +1,7 @@
 import React from 'react';
 import axios from 'axios';
+import '../ListRequest.css';
+
 import TableBoot from './TableBoot';
 import BaseCard from './BaseCard';
 import api from '../api';
@@ -22,6 +24,8 @@ class ListRequest extends React.Component {
         this.createRequest = this.createRequest.bind(this);
         this.onFileChangeHandler = this.onFileChangeHandler.bind(this);
         this.createStaticData = this.createStaticData.bind(this);
+        this.onVehicle = this.onVehicle.bind(this);
+        this.onPerson = this.onPerson.bind(this);
     }
 
     async componentDidMount() {
@@ -95,14 +99,26 @@ class ListRequest extends React.Component {
         await this.setState({ file: event.target.files });
     }
 
+    async onVehicle() {
+        await this.setState({
+            type: 'VEHICLE'
+        });
+    }
+
+    async onPerson() {
+        await this.setState({
+            type: 'PERSON'
+        });
+    }
+
     render() {
         return (
             <div className='padding-46'>
                 <div class='action-container'>
-                    <BaseCard isActive>
+                    <BaseCard isActive onClick={this.onPerson}>
                         <img height='60' src='../individual-order.png' />
                     </BaseCard>
-                    <BaseCard>
+                    <BaseCard  onClick={this.onVehicle}>
                         <img height='60' src='../vehicle-order.png' />
                     </BaseCard>
                     <div class='separator'></div>
