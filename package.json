@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "bluebird": "^3.7.2",
     "bootstrap": "^4.4.1",
+    "dayjs": "^1.8.23",
     "file-type": "^14.1.4",
     "formik": "^2.1.4",
     "fs": "0.0.1-security",

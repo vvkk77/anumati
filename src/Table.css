@@ -1,0 +1,38 @@
+table {
+    background-color: white;
+}
+
+table .center {
+    text-align: center;
+}
+
+table thead {
+    background-color: #EDEDED;
+}
+
+table thead td {
+    font-weight: 600;
+}
+
+table .left {
+    text-align: left;
+}
+
+table .right {
+    text-align: right;
+}
+
+.table-bordered thead td {
+    border-color: #EDEDED;
+}
+
+.table-bordered td {
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.action-icon {
+    opacity: 0.75;
+    padding: 0 6px;
+    cursor: pointer;
+}

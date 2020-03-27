@@ -1,42 +1,47 @@
 import React from 'react';
-import Table from 'react-bootstrap/Table';
 
+import downloadArrow from '../images/download-arrow.png';
 import '../Table.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { formatDate } from '../utils';
+import { Badge, Table } from 'react-bootstrap';
 
 class TableBoot extends React.Component {
     render() {
         const Orders = this.props.rows.map((item, index) => {
             let statusClass = 'status';
 
-            if (item['status']) {
-                statusClass += ` ${item['status'].toLowerCase()}`;
+            if (item.orderStatus) {
+                statusClass += ` ${item.orderStatus.toLowerCase()}`;
             }
 
             return (
                 <tr key={index}>
-                    <td>{index}</td>
-                    <td>{item['type']}</td>
-                    <td>{item['requestCount']}</td>
-                    <td>{item['createdAt']}</td>
-                    <td>{item['district']}</td>
-                    <td className={statusClass}>{item['status']}</td>
-                    <td>{item['pdfUrl']}</td>
+                    <td>{item.id}</td>
+                    <td>
+                        <Badge variant={item.orderType == 'person' ? 'primary' : 'dark'}>
+                            {item.orderType.toUpperCase()}
+                        </Badge>
+                    </td>
+                    <td className='right'>{item.requestCount}</td>
+                    <td>{formatDate(item.createdAt)}</td>
+                    <td className={statusClass}>{item.orderStatus}</td>
+                    <td>{item['pdfUrl'] ? <img src={downloadArrow} alt='Download' /> : null}</td>
                 </tr>
             );
         });
 
         return (
             <div className='request-table-container'>
-                <Table striped bordered hover>
+                <Table bordered hover>
                     <thead>
-                        <th>#</th>
-                        <th>Type</th>
-                        <th>No of Passes</th>
-                        <th>Raised on</th>
-                        <th>District</th>
-                        <th>Status</th>
-                        <th width='300'>Download</th>
+                        <tr>
+                            <td>#</td>
+                            <td>Type</td>
+                            <td width='150'>No of Passes</td>
+                            <td>Raised on</td>
+                            <td>Status</td>
+                            <td width='300'>Download</td>
+                        </tr>
                     </thead>
                     <tbody>{Orders}</tbody>
                 </Table>
