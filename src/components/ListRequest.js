@@ -6,6 +6,7 @@ import BaseCard from './BaseCard';
 import individualOrderImage from '../images/individual-order.png';
 import vehicleOrderImage from '../images/vehicle-order.png';
 import api from '../api';
+import sortBy from 'lodash.sortby'
 
 class ListRequest extends React.Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class ListRequest extends React.Component {
         try {
             const response = await api.getAllOrders();
             if (response.status === 200) {
-                this.setState({ orderList: response.data.orders });
+                this.setState({ orderList:  sortBy(response.data.orders,'createdAt').reverse() });
             } else {
                 await this.createStaticData();
             }

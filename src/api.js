@@ -10,6 +10,29 @@ const fileHeaders = {
 };
 
 axios.defaults.baseURL = BASE_URL;
+// Add a request interceptor
+axios.interceptors.request.use(
+    function(config) {
+        window.dispatchEvent(new CustomEvent('showLoader'));
+
+        return config;
+    },
+    function(error) {
+        window.dispatchEvent(new CustomEvent('hideLoader'));
+        return Promise.reject(error);
+    },
+);
+
+axios.interceptors.response.use(
+    function(response) {
+        window.dispatchEvent(new CustomEvent('hideLoader'));
+        return response;
+    },
+    function(error) {
+        window.dispatchEvent(new CustomEvent('hideLoader'));
+        return Promise.reject(error);
+    },
+);
 
 export default {
     signIn(email, password) {

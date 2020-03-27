@@ -22,7 +22,7 @@ class TableBoot extends React.Component {
                             {item.orderType.toUpperCase()}
                         </Badge>
                     </td>
-                    <td className='right'>{item.requestCount}</td>
+                    <td className='center'>{item.requestCount}</td>
                     <td>{formatDate(item.createdAt)}</td>
                     <td className={statusClass}>{item.orderStatus}</td>
                     <td>
@@ -49,7 +49,7 @@ class TableBoot extends React.Component {
                         <tr>
                             <td>#</td>
                             <td>Type</td>
-                            <td width='150'>No of Passes</td>
+                            <td className='center' width='150'>No of Passes</td>
                             <td>Raised on</td>
                             <td>Status</td>
                             <td width='300'>Download</td>

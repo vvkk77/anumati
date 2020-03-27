@@ -4,6 +4,7 @@ import ListRequest from './components/ListRequest';
 import Header from './components/Header';
 import './App.css';
 import anumatiLogo from './images/anumatiLogo.jpg';
+import FullScreenLoader from './components/FullScreenLoader';
 
 class App extends React.Component {
     constructor(props) {
@@ -11,7 +12,16 @@ class App extends React.Component {
 
         this.state = {
             loggedIn: this.checkLoginSession(),
+            loading: false,
         };
+
+        window.addEventListener('hideLoader', () => {
+            this.setState({ loading: false });
+        });
+
+        window.addEventListener('showLoader', () => {
+            this.setState({ loading: true });
+        });
     }
 
     checkLoginSession = () => {
@@ -38,6 +48,7 @@ class App extends React.Component {
                         }}
                     />
                     <Login onLogin={this.onLoginSuccess} />
+                    {this.state.loading ? <FullScreenLoader /> : null}
                 </div>
             );
         } else {
@@ -45,6 +56,7 @@ class App extends React.Component {
                 <div>
                     <Header />
                     <ListRequest />
+                    {this.state.loading ? <FullScreenLoader /> : null}
                 </div>
             );
         }
