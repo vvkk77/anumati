@@ -11,6 +11,10 @@
     text-transform: uppercase;
 }
 
+.status.created {
+    color: #007bff;
+}
+
 .status.pending {
     color: #e17614;
 }
@@ -19,12 +23,16 @@
     color: #12ab2b;
 }
 
+.status.declined {
+    color: #aa2d2d;
+}
+
 .separator {
     display: inline-flex;
     width: 0;
     border: 1px solid gray;
     height: 100px;
-    margin-right: 36px;
+    margin-right: 24px;
 }
 
 .action-container {
@@ -45,7 +53,7 @@
     border: 1px dashed #c4c4c4;
     justify-content: center;
     align-items: center;
-    margin-right: 36px;
+    margin-right: 24px;
     cursor: pointer;
     text-align: center;
     flex-grow: 1;
