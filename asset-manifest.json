@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/anumati/static/css/main.41c8d46e.chunk.css",
+    "main.css": "/anumati/static/css/main.b0fbafdb.chunk.css",
     "main.js": "/anumati/static/js/main.ac0f8ea9.chunk.js",
     "main.js.map": "/anumati/static/js/main.ac0f8ea9.chunk.js.map",
     "runtime-main.js": "/anumati/static/js/runtime-main.7e8446b1.js",
@@ -9,10 +9,10 @@
     "static/js/2.4137b6b6.chunk.js": "/anumati/static/js/2.4137b6b6.chunk.js",
     "static/js/2.4137b6b6.chunk.js.map": "/anumati/static/js/2.4137b6b6.chunk.js.map",
     "index.html": "/anumati/index.html",
-    "precache-manifest.972a6b5b7585b2e564a8fab75fb4282b.js": "/anumati/precache-manifest.972a6b5b7585b2e564a8fab75fb4282b.js",
+    "precache-manifest.2c42e954b08b3333c7c458413c263d9e.js": "/anumati/precache-manifest.2c42e954b08b3333c7c458413c263d9e.js",
     "service-worker.js": "/anumati/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "/anumati/static/css/2.de424728.chunk.css.map",
-    "static/css/main.41c8d46e.chunk.css.map": "/anumati/static/css/main.41c8d46e.chunk.css.map",
+    "static/css/main.b0fbafdb.chunk.css.map": "/anumati/static/css/main.b0fbafdb.chunk.css.map",
     "static/js/2.4137b6b6.chunk.js.LICENSE.txt": "/anumati/static/js/2.4137b6b6.chunk.js.LICENSE.txt",
     "static/media/anumatiLogo.jpg": "/anumati/static/media/anumatiLogo.72e1b5bf.jpg"
   },
@@ -20,7 +20,7 @@
     "static/js/runtime-main.7e8446b1.js",
     "static/css/2.de424728.chunk.css",
     "static/js/2.4137b6b6.chunk.js",
-    "static/css/main.41c8d46e.chunk.css",
+    "static/css/main.b0fbafdb.chunk.css",
     "static/js/main.ac0f8ea9.chunk.js"
   ]
 }
