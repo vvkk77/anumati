@@ -33,9 +33,12 @@ class ListRequest extends React.Component {
 
     async componentDidMount() {
         //get all orders
+        await this.fetchAllOrders();
+    }
+
+    fetchAllOrders = async () => {
         try {
             const response = await api.getAllOrders(this.state.accountId, this.state.authToken);
-            console.log('response', { response });
             if (response.status === 200) {
                 this.setState({ orderList: response.data.orders });
             } else {
@@ -45,7 +48,7 @@ class ListRequest extends React.Component {
             this.setState({ fetchError: error.toString() });
             await this.createStaticData();
         }
-    }
+    };
 
     //placeholder data
     async createStaticData() {
@@ -89,6 +92,7 @@ class ListRequest extends React.Component {
             formData.append('authToken', this.state.authToken);
 
             const response = await api.createOrder(formData);
+            await this.fetchAllOrders();
             console.log(response);
         } catch (error) {
             console.log(error);
