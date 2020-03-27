@@ -5,13 +5,13 @@ import FormErrorMessage from './FormErrorMessage';
 import Register from './Register';
 import '../Login.css';
 import api from '../api';
+import dayjs from 'dayjs';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             registered: true,
-
         };
     }
 
@@ -20,8 +20,10 @@ class Login extends React.Component {
         const { data } = await api.signIn(email, password);
 
         localStorage.setItem('auth', data.authToken);
-        // to send - authToken, organizationId, organization,
-        this.props.onLogin(data.accountID, data.authToken, data.organizationID);
+        localStorage.setItem('accountID', data.accountID);
+        localStorage.setItem('organizationID', data.organizationID);
+        localStorage.setItem('expiry', dayjs(new Date()).add(1, 'day'));
+        this.props.onLogin();
     };
 
     openRegistrationForm = () => {

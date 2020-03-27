@@ -10,19 +10,18 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            loggedIn: false,
-            accountId: null,
-            organizationId: null,
-            authToken: null
+            loggedIn: this.checkLoginSession(),
         };
     }
 
-    onLoginSuccess = async (accountId, authToken, organizationId) => {
+    checkLoginSession = () => {
+        const expiry = localStorage.getItem('expiry');
+        return localStorage.getItem('auth') && expiry && new Date(expiry) > Date.now();
+    };
+
+    onLoginSuccess = () => {
         this.setState({
             loggedIn: true,
-            accountId: accountId,
-            authToken: authToken,
-            organizationId: organizationId
         });
     };
 
@@ -45,11 +44,7 @@ class App extends React.Component {
             return (
                 <div>
                     <Header />
-                    <ListRequest
-                     organization= {this.state.organization}
-                     accountId= {this.state.accountId}
-                     authToken= {this.state.authToken}
-                    />
+                    <ListRequest />
                 </div>
             );
         }

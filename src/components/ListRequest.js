@@ -12,9 +12,6 @@ class ListRequest extends React.Component {
         super(props);
 
         this.state = {
-            organization: this.props.organization,
-            accountId: this.props.accountId,
-            authToken: this.props.authToken,
             organizationName: '',
             orderList: [],
             file: null,
@@ -38,7 +35,7 @@ class ListRequest extends React.Component {
 
     fetchAllOrders = async () => {
         try {
-            const response = await api.getAllOrders(this.state.accountId, this.state.authToken);
+            const response = await api.getAllOrders();
             if (response.status === 200) {
                 this.setState({ orderList: response.data.orders });
             } else {
@@ -82,14 +79,14 @@ class ListRequest extends React.Component {
 
     async createRequest() {
         // create request to save file
-        if (!this.state.type) {
+        if (!this.state.type && !this.state.file) {
             return;
         }
         try {
             let formData = new FormData(); //formdata object
             formData.append('file', this.state.file); //append the values with key, value pair
             formData.append('orderType', this.state.type);
-            formData.append('authToken', this.state.authToken);
+            formData.append('authToken', localStorage.getItem('auth'));
 
             const response = await api.createOrder(formData);
             await this.fetchAllOrders();
@@ -119,31 +116,52 @@ class ListRequest extends React.Component {
         });
     }
 
+    deleteFile = (e) => {
+        e.preventDefault();
+        this.setState({ file: null });
+    };
+
     render() {
         return (
             <div className='padding-46'>
-                <div class='action-container'>
+                <div className='action-container'>
                     <BaseCard isActive={this.state.person} onClick={this.onPerson}>
                         <img height='60' src={individualOrderImage} />
                     </BaseCard>
                     <BaseCard isActive={this.state.vehicle} onClick={this.onVehicle}>
-                        <img height='60' src={vehicleOrderImage} />
+                        <img height='50' src={vehicleOrderImage} />
                     </BaseCard>
-                    <div class='separator'></div>
-                    <BaseCard isActive={true}>Download Sample file</BaseCard>
+                    <div className='separator'></div>
+                    <BaseCard isActive={true}>
+                        <a>Download Sample file</a>
+                    </BaseCard>
 
-                    <div class='upload-container'>
-                        <label for='file-upload'>Upload file</label>
-                        <input
-                            hidden
-                            id='file-upload'
-                            type='file'
-                            accept='.csv'
-                            onChange={this.onFileChangeHandler}
-                        />
-                    </div>
+                    <label htmlFor='file-upload' className='upload-container'>
+                        {this.state.file ? (
+                            <div className='file-name'>
+                                File: {this.state.file.name}{' '}
+                                <span onClick={this.deleteFile} className='delete-file-icon'>
+                                    &#x2715;
+                                </span>
+                            </div>
+                        ) : (
+                            <>
+                                <label htmlFor='file-upload'>Upload file</label>
+                                <input
+                                    hidden
+                                    id='file-upload'
+                                    type='file'
+                                    accept='.csv'
+                                    onChange={this.onFileChangeHandler}
+                                />
+                            </>
+                        )}
+                    </label>
 
-                    <BaseCard isActive={true} onClick={this.createRequest} class='send-request-btn'>
+                    <BaseCard
+                        isActive={!!this.state.file}
+                        onClick={this.createRequest}
+                        class='send-request-btn'>
                         Send Request
                     </BaseCard>
                 </div>

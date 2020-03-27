@@ -28,13 +28,15 @@ export default {
         return axios.post('/createOrder', formData, { headers: fileHeaders });
     },
 
-    getAllOrders(accountId, authToken) {
+    getAllOrders() {
         const value = axios.post(
             '/getOrders',
-            { accountID: accountId, authToken: authToken },
+            {
+                accountID: localStorage.getItem('accountID'),
+                authToken: localStorage.getItem('auth'),
+            },
             { headers: headers },
         );
-        console.log(value);
         return value;
     },
 };

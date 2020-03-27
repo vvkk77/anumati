@@ -17,6 +17,7 @@
         "file-type": "^14.1.4",
         "formik": "^2.1.4",
         "fs": "0.0.1-security",
+        "lodash.sortby": "^4.7.0",
         "multiparty": "^4.2.1",
         "react": "^16.13.1",
         "react-bootstrap": "^1.0.0",
