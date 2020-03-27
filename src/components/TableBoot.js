@@ -3,7 +3,7 @@ import React from 'react';
 import downloadArrow from '../images/download-arrow.png';
 import '../Table.css';
 import { formatDate } from '../utils';
-import { Badge, Table } from 'react-bootstrap';
+import { Badge, Table, Button } from 'react-bootstrap';
 
 class TableBoot extends React.Component {
     render() {
@@ -25,7 +25,19 @@ class TableBoot extends React.Component {
                     <td className='right'>{item.requestCount}</td>
                     <td>{formatDate(item.createdAt)}</td>
                     <td className={statusClass}>{item.orderStatus}</td>
-                    <td>{item['pdfUrl'] ? <img src={downloadArrow} alt='Download' /> : null}</td>
+                    <td>
+                        {item.zipFileURL ? (
+                            <Button variant='link' href={item.zipFileURL} download>
+                                <img
+                                    height='16'
+                                    style={{ marginRight: '8px' }}
+                                    src={downloadArrow}
+                                    alt='Download'
+                                />
+                                Download QRs
+                            </Button>
+                        ) : null}
+                    </td>
                 </tr>
             );
         });
