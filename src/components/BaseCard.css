@@ -9,9 +9,9 @@
     margin-right: 24px;
     cursor: pointer;
     text-align: center;
-    opacity: 50%;
+    opacity: 0.5;
 }
 
 .active {
-    opacity: 100%;
+    opacity: 1;
 }
